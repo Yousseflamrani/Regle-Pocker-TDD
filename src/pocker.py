@@ -22,6 +22,9 @@ def get_score(hand_str):
     cards_str = hand_str.split()
     numeric_ranks = [ranks_map[c[:-1]] for c in cards_str]
     numeric_ranks.sort(reverse=True)
+    suits = [c[-1] for c in cards_str]
+
+    from collections import Counter
 
     rank_counts = Counter(numeric_ranks)
     sorted_by_count_then_value = sorted(
@@ -32,9 +35,19 @@ def get_score(hand_str):
 
     pattern = sorted([count for (_, count) in rank_counts.items()], reverse=True)
 
+    is_straight = len(set(numeric_ranks)) == 5 and (max(numeric_ranks) - min(numeric_ranks) == 4)
+    is_flush= len(set(suits)) == 1
+
     if set(numeric_ranks)== {14, 2, 3, 4, 5}: # Vérification de la Quinte
         is_straight = True
         numeric_ranks = [5, 4, 3, 2, 1]
+
+
+    if is_flush and is_straight:  #Quinte Flush (Straight + Flush)
+        return (8, [max(numeric_ranks)])
+
+    if is_flush:# Flush (Couleur)
+        return (5, numeric_ranks)
 
     if is_straight:
         return(4,[max(numeric_ranks)])

@@ -76,3 +76,22 @@ def test_compare_straight_with_ace():
     result = compare_hand(hand7, hand8)
 
     assert result == -1, "La Quinte hauteur 9 doit battre la Quinte basse A-2-3-4-5"
+
+
+def test_compare_flush():
+
+    from src.pocker import compare_hand
+    hand9= "2H 5H 7H 9H AH"
+    hand10= "4S 8S QS 10S KS"
+    result = compare_hand(hand9, hand10)
+    assert result ==1
+
+def test_compare_flush_vs_straight():
+
+    from src.pocker import compare_hand
+    flush= "2H 5H 7H 9H KH"
+    straight= "2C 3D 4H 5D 6S"
+
+    result = compare_hand(flush, straight)
+
+    assert result ==1, "Une Couleur doit battre une Quinte."
