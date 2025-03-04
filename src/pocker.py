@@ -1,37 +1,44 @@
+from collections import Counter
+
 def compare_hand(hand1_str, hand2_str):
-    """
-    Compare hand1 et hand2.
-    - Retourne 1 si hand1 > hand2
-    - Retourne -1 si hand2 > hand1
-    - Retourne 0 si égalité
-    """
-    hand1_has_pair = has_pair(hand1_str)
-    hand2_has_pair = has_pair(hand2_str)
+    hand1_score = get_score(hand1_str)
+    hand2_score = get_score(hand2_str)
 
-
-    if hand1_has_pair and not hand2_has_pair:
+    if hand1_score > hand2_score:
         return 1
-
-
-    if hand2_has_pair and not hand1_has_pair:
+    elif hand1_score < hand2_score:
         return -1
+    else:
+        return 0
 
-    return 0
+def get_score(hand_str):
+    ranks_map = {
+        '2': 2, '3': 3, '4': 4, '5': 5, '6': 6,
+        '7': 7, '8': 8, '9': 9, '10': 10,
+        'J': 11, 'Q': 12, 'K': 13, 'A': 14
+    }
 
+    cards_str = hand_str.split()
+    numeric_ranks = [ranks_map[c[:-1]] for c in cards_str]
+    numeric_ranks.sort(reverse=True)
+
+    rank_counts = Counter(numeric_ranks)
+    sorted_by_count_then_value = sorted(
+        rank_counts.items(),
+        key=lambda x: (x[1], x[0]),
+        reverse=True
+    )
+
+    pattern = sorted([count for (_, count) in rank_counts.items()], reverse=True)
+
+    if pattern == [2,1,1,1]:
+        pair_value = sorted_by_count_then_value[0][0]
+        kickers = [x[0] for x in sorted_by_count_then_value[1:]]
+        return (1, [pair_value] + kickers)
+    else:
+        return (0, numeric_ranks)
 
 def has_pair(hand_str):
-    """
-    Détecte si la main contient au moins une paire.
-    hand_str est une chaîne comme "8H 8D 2S 5C 9H".
-    """
     cards = hand_str.split()
-
-    
-    ranks = []
-    for card in cards:
-
-        rank_str = card[:-1]
-        ranks.append(rank_str)
-
-    # Si la longueur de set(ranks) est < 5, ça veut dire qu'il y a un doublon
+    ranks = [c[:-1] for c in cards]
     return len(set(ranks)) < 5
