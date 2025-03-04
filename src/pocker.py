@@ -31,12 +31,19 @@ def get_score(hand_str):
 
     pattern = sorted([count for (_, count) in rank_counts.items()], reverse=True)
 
-    if pattern == [2,1,1,1]:
+    if pattern == [2,2,1]:  # detection de deux paires
+        pair1_value = sorted_by_count_then_value[0][0]
+        pair2_value = sorted_by_count_then_value[1][0]
+        kicker = sorted_by_count_then_value[2][0]  # La carte restante
+        return (2, [pair1_value, pair2_value, kicker])
+
+    if pattern == [2,1,1,1]:  # detection d'une seule paire
         pair_value = sorted_by_count_then_value[0][0]
         kickers = [x[0] for x in sorted_by_count_then_value[1:]]
-        return (1, [pair_value] + kickers)
-    else:
-        return (0, numeric_ranks)
+        return (1, [pair_value] + kickers) 
+
+    return (0, numeric_ranks)  # Carte haute
+
 
 def has_pair(hand_str):
     cards = hand_str.split()

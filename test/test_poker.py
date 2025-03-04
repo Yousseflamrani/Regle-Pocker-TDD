@@ -23,9 +23,14 @@ def test_compare_higher_pair_wins():
 
     from src.pocker import compare_hand
 
-    pair_of_9 = "9H 9D 2S 5C 3H"
-    pair_of_8 = "8H 8D 2S 5C 3H"
+    #pair_of_9 = "9H 9D 2S 5C 3H"
+    #pair_of_8 = "8H 8D 2S 5C 3H"
 
-    result = compare_hand(pair_of_9, pair_of_8)
+    #test pour deux paire
+
+    hand1 = "JH JC 4S 4H AD"
+    hand2 = "JS JD 4C 4D 10S"
+
+    result = compare_hand(hand1, hand2)
 
     assert result == 1, "la caret 9 devrait battre la carte 8"
