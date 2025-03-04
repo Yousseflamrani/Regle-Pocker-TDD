@@ -31,6 +31,11 @@ def get_score(hand_str):
 
     pattern = sorted([count for (_, count) in rank_counts.items()], reverse=True)
 
+    if pattern == [3,1,1]: #Brelan
+        brelan = sorted_by_count_then_value[0][0]
+        kickers = [sorted_by_count_then_value [1][0], sorted_by_count_then_value [2][0]]
+        return(3, [brelan]+ kickers)
+
     if pattern == [2,2,1]:  # detection de deux paires
         pair1_value = sorted_by_count_then_value[0][0]
         pair2_value = sorted_by_count_then_value[1][0]
@@ -40,7 +45,7 @@ def get_score(hand_str):
     if pattern == [2,1,1,1]:  # detection d'une seule paire
         pair_value = sorted_by_count_then_value[0][0]
         kickers = [x[0] for x in sorted_by_count_then_value[1:]]
-        return (1, [pair_value] + kickers) 
+        return (1, [pair_value] + kickers)
 
     return (0, numeric_ranks)  # Carte haute
 
