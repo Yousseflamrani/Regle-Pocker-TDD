@@ -1,5 +1,3 @@
-from collections import Counter
-
 def compare_hand(hand1_str, hand2_str):
     hand1_score = get_score(hand1_str)
     hand2_score = get_score(hand2_str)
@@ -91,3 +89,49 @@ def has_pair(hand_str):
     cards = hand_str.split()
     ranks = [c[:-1] for c in cards]
     return len(set(ranks)) < 5
+
+
+
+def get_hand_from_input(prompt):
+    """
+    Demande à l'utilisateur d'entrer une main de poker au format correct.
+    """
+    while True:
+        hand = input(prompt).strip().upper()
+        cards = hand.split()
+
+        if len(cards) != 5:
+            print("Erreur : Une main doit contenir exactement 5 cartes.")
+            continue
+
+        valid_ranks = {'2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'}
+        valid_suits = {'H', 'D', 'S', 'C'}
+
+        valid = True
+        for card in cards:
+            rank, suit = card[:-1], card[-1]
+            if rank not in valid_ranks or suit not in valid_suits:
+                print(f"Erreur : {card} n'est pas une carte valide.")
+                valid = False
+                break
+
+        if valid:
+            return hand
+
+if __name__ == "__main__":
+    print("=== Comparateur de Mains de Poker ===")
+
+    hand1 = get_hand_from_input("Entrez la première main (ex: '10H 9H 8H 7H 6H') : ")
+    hand2 = get_hand_from_input("Entrez la deuxième main (ex: 'AH KH QH JH 10H') : ")
+
+    result = compare_hand(hand1, hand2)
+
+    if result == 1:
+        print(f"La main 1 ({hand1}) est gagnante.")
+    elif result == -1:
+        print(f"La main 2 ({hand2}) est gagnante.")
+    else:
+        print("Égalité parfaite !")
+
+
+
