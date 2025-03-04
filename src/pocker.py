@@ -25,7 +25,6 @@ def get_score(hand_str):
     suits = [c[-1] for c in cards_str]
 
     from collections import Counter
-
     rank_counts = Counter(numeric_ranks)
     sorted_by_count_then_value = sorted(
         rank_counts.items(),
@@ -51,6 +50,12 @@ def get_score(hand_str):
 
     if is_straight:
         return(4,[max(numeric_ranks)])
+
+
+    if pattern == [3,2]:    # Full House (Brelan + Paire)
+        three_of_a_kind = sorted_by_count_then_value[0][0]
+        pair_value = sorted_by_count_then_value[1][0]
+        return (6, [three_of_a_kind, pair_value])
 
 
     if pattern == [3,1,1]: #Brelan

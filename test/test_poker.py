@@ -95,3 +95,26 @@ def test_compare_flush_vs_straight():
     result = compare_hand(flush, straight)
 
     assert result ==1, "Une Couleur doit battre une Quinte."
+
+def test_compare_full_house():
+    from src.pocker import compare_hand
+
+
+    hand1 = "10H 10D 10S 4C 4H"
+
+    hand2 = "9H 9D 9S AC AS"
+
+    result = compare_hand(hand1, hand2)
+
+    assert result == 1, "Le Full House aux 10 doit battre le Full House aux 9"
+
+def test_compare_full_house_vs_flush():
+    from src.pocker import compare_hand
+
+    full_house = "10H 10D 10S 4C 4H"
+
+    flush = "2H 5H 7H 9H KH"
+
+    result = compare_hand(full_house, flush)
+
+    assert result == 1, "Un Full House doit battre une Couleur"
