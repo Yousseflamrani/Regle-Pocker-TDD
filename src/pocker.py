@@ -42,6 +42,10 @@ def get_score(hand_str):
         numeric_ranks = [5, 4, 3, 2, 1]
 
 
+    if is_flush and is_straight and max(numeric_ranks) == 14:    # Quinte Flush Royale
+        return (9, [14])
+
+
     if is_flush and is_straight:  #Quinte Flush (Straight + Flush)
         return (8, [max(numeric_ranks)])
 
@@ -50,6 +54,12 @@ def get_score(hand_str):
 
     if is_straight:
         return(4,[max(numeric_ranks)])
+
+
+    if pattern == [4,1]: # Carré (Four of a Kind)
+        four_of_a_kind = sorted_by_count_then_value[0][0]
+        kicker = sorted_by_count_then_value[1][0]
+        return (7, [four_of_a_kind, kicker])
 
 
     if pattern == [3,2]:    # Full House (Brelan + Paire)

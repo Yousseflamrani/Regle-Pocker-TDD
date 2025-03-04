@@ -118,3 +118,48 @@ def test_compare_full_house_vs_flush():
     result = compare_hand(full_house, flush)
 
     assert result == 1, "Un Full House doit battre une Couleur"
+
+def test_compare_four_of_a_kind():
+    from src.pocker import compare_hand
+
+    hand1 = "10H 10D 10S 10C 4H"
+
+    hand2 = "9H 9D 9S 9C AS"
+
+    result = compare_hand(hand1, hand2)
+
+    assert result == 1, "Le Carré de 10 doit battre le Carré de 9."
+
+def test_compare_four_of_a_kind_vs_full_house():
+    from src.pocker import compare_hand
+
+
+    four_of_a_kind = "10H 10D 10S 10C 4H"
+
+    full_house = "KH KD KS QC QD"
+
+    result = compare_hand(four_of_a_kind, full_house)
+
+    assert result == 1, "Un Carré doit battre un Full House."
+
+def test_compare_straight_flush_vs_four_of_a_kind():
+    from src.pocker import compare_hand
+
+    straight_flush = "9S 8S 7S 6S 5S"
+
+    four_of_a_kind = "10H 10D 10S 10C 3H"
+
+    result = compare_hand(straight_flush, four_of_a_kind)
+
+    assert result == 1, "Une Quinte Flush doit battre un Carré."
+
+def test_compare_royal_flush_vs_straight_flush():
+    from src.pocker import compare_hand
+
+    royal_flush = "AH KH QH JH 10H"
+
+    straight_flush = "9S 8S 7S 6S 5S"
+
+    result = compare_hand(royal_flush, straight_flush)
+
+    assert result == 1, "Une Quinte Flush Royale doit battre une Quinte Flush."
