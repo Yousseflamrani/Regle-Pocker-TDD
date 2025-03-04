@@ -23,10 +23,22 @@ def test_compare_higher_pair_wins():
 
     from src.pocker import compare_hand
 
-    #pair_of_9 = "9H 9D 2S 5C 3H"
-    #pair_of_8 = "8H 8D 2S 5C 3H"
+    pair_of_9 = "9H 9D 2S 5C 3H"
+    pair_of_8 = "8H 8D 2S 5C 3H"
 
-    #test pour deux paire
+    result = compare_hand(pair_of_9, pair_of_8)
+
+    assert result == 1, "la caret 9 devrait battre la carte 8"
+
+
+def test_compare_higher_pair_wins():
+
+    """
+    testet deux paire
+
+    """
+
+    from src.pocker import compare_hand
 
     hand1 = "JH JC 4S 4H AD"
     hand2 = "JS JD 4C 4D 10S"
@@ -34,3 +46,13 @@ def test_compare_higher_pair_wins():
     result = compare_hand(hand1, hand2)
 
     assert result == 1, "la caret 9 devrait battre la carte 8"
+
+
+def test_compare_Brelan():
+
+    from src.pocker import compare_hand
+    hand3 = "9H 9D 9S 5C 3H"
+    hand4 = "8H 8D 8S AC 10H"
+
+    result = compare_hand(hand3, hand4)
+    assert result == 1, "Le Brelan de 9 doit battre le Brelan de 8"
