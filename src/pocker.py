@@ -12,6 +12,7 @@ def compare_hand(hand1_str, hand2_str):
         return 0
 
 def get_score(hand_str):
+    global is_straight
     ranks_map = {
         '2': 2, '3': 3, '4': 4, '5': 5, '6': 6,
         '7': 7, '8': 8, '9': 9, '10': 10,
@@ -30,6 +31,14 @@ def get_score(hand_str):
     )
 
     pattern = sorted([count for (_, count) in rank_counts.items()], reverse=True)
+
+    if set(numeric_ranks)== {14, 2, 3, 4, 5}: # Vérification de la Quinte
+        is_straight = True
+        numeric_ranks = [5, 4, 3, 2, 1]
+
+    if is_straight:
+        return(4,[max(numeric_ranks)])
+
 
     if pattern == [3,1,1]: #Brelan
         brelan = sorted_by_count_then_value[0][0]
